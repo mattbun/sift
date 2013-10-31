@@ -16,8 +16,9 @@ args = parser.parse_args()
 conf = config.config
 
 if args.file is not None:
+    from lib import file
     for f in args.file:
-        print(video.process(conf, f[0]))
+        print(file.process(conf, f[0]))
 
 if args.audio is not None:
     from lib import audio
