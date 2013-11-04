@@ -30,3 +30,9 @@ if args.video is not None:
     for v in args.video:
         print(video.process(conf, v[0]))
 
+if args.video is None and \
+   args.audio is None and \
+   args.file is None:
+    from lib import watch
+    watch.start(conf) 
+
