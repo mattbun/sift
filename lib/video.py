@@ -23,18 +23,22 @@ def process(conf, full_path):
     # Look for sNNeNN names
     o = re.search('(.*)[sS](\d+)[eE](\d+)(.*)',file_name)
     if o is not None:
-        show_name_attempts.append(attempt.makeAttempt(o.group(1), 80))
         season_attempts.append(attempt.makeAttempt(o.group(2), 80))
         episode_number_attempts.append(attempt.makeAttempt(o.group(3), 80))
-        episode_name_attempts.append(attempt.makeAttempt(o.group(4), 80))
+        if o.group(1) != '':
+            show_name_attempts.append(attempt.makeAttempt(o.group(1), 80))
+        if o.group(4) != '':
+            episode_name_attempts.append(attempt.makeAttempt(o.group(4), 80))
 
     # Look for NNxNN names
     o = re.search('(.*)(\d+)[xX-](\d+)(.*)',file_name) #TODO add more of these
     if o is not None:
-        show_name_attempts.append(attempt.makeAttempt(o.group(1), 80))
-        season_attempts.append(attempt.makeAttempt(o.group(2), 80))
-        episode_number_attempts.append(attempt.makeAttempt(o.group(3), 80))
-        episode_name_attempts.append(attempt.makeAttempt(o.group(4), 80))
+        season_attempts.append(attempt.makeAttempt(o.group(2), 70))
+        episode_number_attempts.append(attempt.makeAttempt(o.group(3), 70))
+        if o.group(1) != '':
+            show_name_attempts.append(attempt.makeAttempt(o.group(1), 70))
+        if o.group(4) != '':
+            episode_name_attempts.append(attempt.makeAttempt(o.group(4), 70))
 
     # Look for episode numbers that follow the letter E
     o = re.search('[eE](\d+)',file_name)
@@ -44,7 +48,7 @@ def process(conf, full_path):
     # Look for episode numbers that follow the word "episode"
     o = re.search('[eE]pisode(\d+)',file_name)
     if o is not None:
-        episode_number_attempts.append(attempt.makeAttempt(o.group(1), 70))
+        episode_number_attempts.append(attempt.makeAttempt(o.group(1), 65))
 
     # look for episode numbers that are just the number and no season number
     # These get less certain as it finds more digits since they could contain 

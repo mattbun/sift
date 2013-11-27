@@ -20,7 +20,11 @@ def process(conf, full_path):
         'disc_total' : '',
         'genre' : ''
     }
-    tags = getTags(extension, full_path, tags)
+    try:
+        tags = getTags(extension, full_path, tags)
+    except mutagen.mp3.HeaderNotFoundError:
+        print("No tags on this file")
+        
 
     return utils.assemble(conf['music_format'], tags) + "." + extension
 
