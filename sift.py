@@ -1,10 +1,11 @@
-#!/usr/bin/python
-import lib
+#!/usr/local/bin/python3
 
 import argparse
 import configparser
 import config
 import os
+
+import lib
 
 def recurse(path, conf, process):
     for root, subFolders, files in os.walk(path):

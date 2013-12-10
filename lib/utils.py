@@ -1,6 +1,7 @@
 # utils.py - Functions that may need to be used anywhere in sift
 
 import os
+import string
 
 # Take a format described by format and fill it with the data in values
 def assemble(format, values):
@@ -10,10 +11,30 @@ def assemble(format, values):
     return template.safe_substitute(values)
 
 
-# Removes leading and trailing whitespace
-# TODO MAKE THIS DO MORE THAN PYTHON'S STRIP FUNCTION
-def cleanString(string):
-    return string.strip()
+# Removes leading and trailing whitespace and other characters that don't make sense to begin or end names (like hyphen)
+def cleanString(str):
+    str = str.strip();
+
+# string.punctuation: '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'
+
+    start = 0
+    for i in range(0, len(str) - 1):
+        if (str[i].isspace() or \
+            str[i] in string.punctuation):
+            start = i
+        else:
+            break
+
+    end = len(str)
+    for j in range(len(str) - 1, 0, -1):
+        if (str[j].isspace() or \
+            str[j] == "-" or \
+            str[j] == "."):
+            end = j
+        else:
+            break
+
+    return str[start:end]
 
 # Pulls the filename from a path (no extension or folders)
 def getFileName(path):

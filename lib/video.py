@@ -21,7 +21,7 @@ def process(conf, full_path):
     
     # Now we'll populate those arrays
     # Look for sNNeNN names
-    o = re.search('(.*)[sS](\d+)[eE](\d+)(.*)',file_name)
+    o = re.search('(.*)\s*[\.-]*\s*[sS](\d+)[\s\.-]*[eE](\d+)[\s\.-]*(.*)',file_name)
     if o is not None:
         season_attempts.append(attempt.makeAttempt(o.group(2), 80))
         episode_number_attempts.append(attempt.makeAttempt(o.group(3), 80))
