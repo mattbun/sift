@@ -1,7 +1,7 @@
 from lib import utils
 import mutagen
 
-def process(conf, full_path):
+def assemblePath(conf, full_path):
     print(full_path)
 
     file_name = utils.getFileName(full_path)
@@ -20,14 +20,27 @@ def process(conf, full_path):
         'disc_total' : '',
         'genre' : ''
     }
-    try:
-        tags = getTags(extension, full_path, tags)
-    except mutagen.mp3.HeaderNotFoundError:
-        print("No tags on this file")
-        
+    #try:
+    #    tags = getTags(extension, full_path, tags)
+    #except mutagen.mp3.HeaderNotFoundError:
+    #    print("No tags on this file")
+    
+    # hsaudiotag is pretty limited but it should at least let me get this project off the ground until I can figure out mutagen some more
+    from hsaudiotag3k import auto
+    
+    fulltag = auto.File(full_path)
+    if fulltag.valid:
+       tags['artist'] = fulltag.artist
+       tags['album'] = fulltag.album
+       tags['track_title'] = fulltag.title
+       tags['track_number'] = "%02d" % fulltag.track
+       tags['year'] = fulltag.year
+       tags['genre'] = fulltag.genre
+    
+    #print(tags)    
 
-    return utils.assemble(conf['music_format'], tags) + "." + extension
-
+    result = conf['music_destination'] + utils.assemble(conf['music_format'], tags) + "." + extension
+    return result
 
 def getTags(extension, path, tags):
     if extension == "mp3":

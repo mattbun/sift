@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3
+#!/usr/bin/python
 
 import argparse
 import configparser
@@ -7,14 +7,17 @@ import os
 
 import lib
 
-def recurse(path, conf, process):
+def recurse(path, conf, assemblePath):
     for root, subFolders, files in os.walk(path):
+        if '.AppleDouble' in subFolders:
+            subFolders.remove('.AppleDouble')
+
         for folder in subFolders:
-            if folder != '.AppleDouble':
-                recurse(os.path.join(root,folder), conf, process)
+            print(folder)
+            recurse(os.path.join(root,folder), conf, assemblePath)
 
         for filename in files:
-            print(process(conf, os.path.join(root,filename)))
+            print(assemblePath(conf, os.path.join(root,filename)))
 
 # Parse Arguments
 parser = argparse.ArgumentParser(description='Move files based on perceived or existing metadata.')
@@ -35,7 +38,7 @@ if args.file is not None:
 if args.audio is not None:
     from lib import audio
     for a in args.audio:
-        recurse(a, conf, lib.audio.process)
+        recurse(a, conf, lib.audio.assemblePath)
         #print(lib.audio.process(conf, a))
 
 if args.video is not None:

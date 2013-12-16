@@ -6,6 +6,7 @@
 
 config = {
     'watch_directories': ['~/Music/Incoming', '~/Downloads'],
+    'file_operation' : 'dryrun',
 
     'tv_format': '$show_name/Season $season_number/$show_name - S${season_number}E$episode_number - $episode_name',
 
