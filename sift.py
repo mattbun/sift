@@ -8,16 +8,17 @@ import os
 import lib
 
 def recurse(path, conf, assemblePath):
+    from lib import fileutils
     for root, subFolders, files in os.walk(path):
         if '.AppleDouble' in subFolders:
             subFolders.remove('.AppleDouble')
 
         for folder in subFolders:
-            print(folder)
             recurse(os.path.join(root,folder), conf, assemblePath)
 
         for filename in files:
-            print(assemblePath(conf, os.path.join(root,filename)))
+            original_path = os.path.join(root, filename)
+            fileutils.doSomethingWithFile(original_path, assemblePath(conf, original_path), conf['file_operation'])
 
 # Parse Arguments
 parser = argparse.ArgumentParser(description='Move files based on perceived or existing metadata.')

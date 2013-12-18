@@ -2,7 +2,6 @@ from lib import utils
 import mutagen
 
 def assemblePath(conf, full_path):
-    print(full_path)
 
     file_name = utils.getFileName(full_path)
     extension = utils.getExtension(full_path)
