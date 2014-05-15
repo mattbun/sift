@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 #!/usr/bin/python
 
 import argparse
@@ -10,15 +11,15 @@ import lib
 def recurse(path, conf, assemblePath):
     from lib import fileutils
     for root, subFolders, files in os.walk(path):
-        if '.AppleDouble' in subFolders:
-            subFolders.remove('.AppleDouble')
 
         for folder in subFolders:
-            recurse(os.path.join(root,folder), conf, assemblePath)
+            if not folder.startswith('.'):
+                recurse(os.path.join(root,folder), conf, assemblePath)
 
         for filename in files:
-            original_path = os.path.join(root, filename)
-            fileutils.doSomethingWithFile(original_path, assemblePath(conf, original_path), conf['file_operation'])
+            if not filename.startswith('.'):
+                original_path = os.path.join(root, filename)
+                fileutils.doSomethingWithFile(original_path, assemblePath(conf, original_path), conf['file_operation'])
 
 # Parse Arguments
 parser = argparse.ArgumentParser(description='Move files based on perceived or existing metadata.')
