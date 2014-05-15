@@ -30,7 +30,8 @@ def move(source, destination):
 extension_map = {
     "move" : move,
     "copy" : copy,
-    "dryrun" : dryrun
+    "dryrun" : dryrun,
+    "test" : dryrun
 }
 
 def doSomethingWithFile(source, destination, operation):

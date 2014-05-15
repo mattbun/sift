@@ -36,10 +36,24 @@ def assemblePath(conf, full_path):
        tags['year'] = fulltag.year
        tags['genre'] = fulltag.genre
     
-    #print(tags)    
+    #print(tags)
+    tags = checkTags(tags)
 
-    result = conf['music_destination'] + utils.assemble(conf['music_format'], tags) + "." + extension
+    result = conf['music_destination'] + "/" + utils.assemble(conf['music_format'], tags) + "." + extension
     return result
+
+def checkTags(tags):
+    if (tags['artist'] == ''):
+        tags['artist'] = 'Unknown Artist';
+
+    if (tags['album'] == ''):
+        tags['album'] = 'Unknown Album';
+
+    if (tags['album_artist'] == ''):
+        tags['album_artist'] = tags['artist']
+
+    return tags
+
 
 def getTags(extension, path, tags):
     if extension == "mp3":
