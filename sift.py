@@ -9,16 +9,20 @@ import lib
 
 def recurse(path, conf, assemblePath):
     from lib import fileutils
-    for root, subFolders, files in os.walk(path):
+    
+    if os.path.isfile(path):
+        fileutils.doSomethingWithFile(path, assemblePath(conf, path), conf['file_operation'])
+    else:
+        for root, subFolders, files in os.walk(path):
 
-        for folder in subFolders:
-            if not folder.startswith('.'):
-                recurse(os.path.join(root,folder), conf, assemblePath)
+            for folder in subFolders:
+                if not folder.startswith('.'):
+                    recurse(os.path.join(root,folder), conf, assemblePath)
 
-        for filename in files:
-            if not filename.startswith('.'):
-                original_path = os.path.join(root, filename)
-                fileutils.doSomethingWithFile(original_path, assemblePath(conf, original_path), conf['file_operation'])
+            for filename in files:
+                if not filename.startswith('.'):
+                    original_path = os.path.join(root, filename)
+                    fileutils.doSomethingWithFile(original_path, assemblePath(conf, original_path), conf['file_operation'])
 
 # Parse Arguments
 parser = argparse.ArgumentParser(description='Move files based on perceived or existing metadata.')
