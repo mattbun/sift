@@ -35,7 +35,7 @@ def assemblePath(conf, full_path):
        tags['track_number'] = "%02d" % fulltag.track
        tags['year'] = fulltag.year
        tags['genre'] = fulltag.genre
-    
+
     #print(tags)
     tags = checkTags(tags)
 
@@ -44,13 +44,16 @@ def assemblePath(conf, full_path):
 
 def checkTags(tags):
     if (tags['artist'] == ''):
-        tags['artist'] = 'Unknown Artist';
+        tags['artist'] = 'Unknown Artist'
 
     if (tags['album'] == ''):
-        tags['album'] = 'Unknown Album';
+        tags['album'] = 'Unknown Album'
 
     if (tags['album_artist'] == ''):
         tags['album_artist'] = tags['artist']
+
+    if (tags['track_number'] == '00'):
+        tags['track_number'] = ''
 
     return tags
 
