@@ -6,7 +6,8 @@ from lib import video
 extension_map = {
     "mp3" : audio.assemblePath,
     "avi" : video.process,
-    "mkv" : video.process
+    "mkv" : video.process,
+    "mp4" : video.process
 }
 
 def process(conf, full_path):

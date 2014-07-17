@@ -10,12 +10,15 @@ def assemble(format, values):
     from string import Template
     template = Template(format)
     
-    return template.safe_substitute(values)
+    return template.safe_substitute(values) + '.' + values["extension"]
 
 # Remove fields that are null, clean up resulting format. This should make filepaths with 
 # missing years, track numbers, etc. look nicer.
 def scrubFormat(format, values):
     
+    if (format.endswith(".$extension")):
+        format = format[:-11]
+
     for tag in values:
         if (values[tag] == ''):
             format = format.replace('$' + tag, '')
@@ -23,26 +26,7 @@ def scrubFormat(format, values):
     splitResult = []
 
     for pathElement in format.split('/'):
-
-        start = 0
-        for i in range(0, len(pathElement) - 1):
-            if (pathElement[i].isspace() or \
-                pathElement[i] == "-" or \
-                pathElement[i] in string.punctuation):
-                start = i
-            else:
-                break
-
-        end = len(pathElement)
-        for j in range(len(pathElement) - 1, 0, -1):
-            if (pathElement[j].isspace() or \
-                pathElement[j] == "-" or \
-                pathElement[j] == "."):
-                end = j
-            else:
-                break
-        
-        splitResult.append(pathElement[start:end])
+        splitResult.append(cleanString(pathElement))
    
     
 #    str = str.strip();
@@ -50,6 +34,28 @@ def scrubFormat(format, values):
 
     return format.replace('//', '/') # It's possible that we may have made a null folder. Is that a thing?
 
+# Clean up string
+def cleanString(str):
+    
+    start = 0
+    for i in range(0, len(str) - 1):
+        if (str[i].isspace() or \
+            str[i] == "-" or \
+            str[i] in string.punctuation):
+            start = i
+        else:
+            break
+
+    end = len(str)
+    for j in range(len(str) - 1, 0, -1):
+        if (str[j].isspace() or \
+            str[j] == "-" or \
+            str[j] == "."):
+            end = j
+        else:
+            break
+    
+    return str[start:end]
 
 # Pulls the filename from a path (no extension or folders)
 def getFileName(path):

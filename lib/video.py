@@ -103,7 +103,8 @@ def process(conf, full_path):
     print("Episode Name: %s" % episode_name.result)
 
     # Make a destination string and return it
-    data = {'show_name' : show_name.result,
+    data = {'extension' : extension,
+            'show_name' : show_name.result,
             'season_number' : season.result,
             'episode_number' : episode_number.result,
             'episode_name' : episode_name.result}

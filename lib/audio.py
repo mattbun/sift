@@ -8,6 +8,7 @@ def assemblePath(conf, full_path):
     containing_directory = utils.getContainingDirectory(full_path)
 
     tags = {
+        'extension' : extension,
         'artist' : '',
         'album_artist' : '',
         'album' : '',
@@ -39,7 +40,7 @@ def assemblePath(conf, full_path):
     #print(tags)
     tags = checkTags(tags)
 
-    result = conf['music_destination'] + "/" + utils.assemble(conf['music_format'], tags) + "." + extension
+    result = conf['music_destination'] + "/" + utils.assemble(conf['music_format'], tags)
     return result
 
 def checkTags(tags):
