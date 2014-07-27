@@ -9,7 +9,11 @@ config = {
     'file_operation' : 'test',
 
     'tv_format': '$show_name/Season $season_number/$show_name - S${season_number}E$episode_number - $episode_name',
+    'tv_destination': '~/Movies',
 
     'music_format': '$album_artist/$year - $album/$track_number - $track_title',
-    'music_destination': '~/Music'
+    'music_destination': '~/Music',
+
+    'movie_format': '$title ($year)',
+    'movie_destination': '~/Movies'
 }

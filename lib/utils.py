@@ -37,6 +37,9 @@ def scrubFormat(format, values):
 # Clean up string
 def cleanString(str):
     
+    # Get rid of '()'
+    str = str.replace('()', '')
+
     start = 0
     for i in range(0, len(str) - 1):
         if (str[i].isspace() or \
@@ -74,3 +77,10 @@ def getContainingDirectory(path):
 def getExtension(path):
     name, ext = os.path.splitext(path)
     return ext[1:]
+
+def isValidYear(year):
+    import datetime
+    if (year < (datetime.now().year + 10) and year > 1800):
+        return 1
+    else:
+        return 0
